@@ -162,13 +162,21 @@ sudo ln -fs /usr/lib/i386-linux-gnu/libjpeg.so.8.0.2 /usr/lib/libjpeg.so.62
 1.从http://www.vim.org/scripts/script.php?script_id=95下载winmanager
 2.将解压包内的doc及plugin包放到vim安装的相应目录（通过locate vim查找到本机的路径在/usr/share/vim/vim73/doc中）
 3.终端中执行sudo vim -c "helptags /usr/share/vim/vim73/doc" -c "q"或者在VIM(需要root打开)中执行helptags /usr/share/vim/vim73/doc，这样可以把帮助文档导入vim中，以后可在需要时在vim中输入help winmanager查看帮助文档
-4.为了使用快捷操作该插件，还需要做键盘映射，执行命令：sudo vim /etc/vim/vimrc
+4.为了使用快捷操作该插件，还需要做键盘映射，执行命令：sudo vim /etc/vim/vimrc, 并加入以下代码
 "my_custom_setting
-let g:winManagerWindowLayout = "FileExplorer"
+"let g:winManagerWindowLayout = "FileExplorer"
 map <c-w><c-f> :FirstExplorerWindow<cr>
 map <c-w><c-b> :BottomExplorerWindow<cr>
 map <c-w><c-t> :WMToggle<cr>
-"my_custome_setting
+"set nu
+set tabstop=2
+set shiftwidth=2
+"设置交换文件存放路么，避免直接在当前路径生成交换文件造成的GIT代码提交
+set bdir-=.
+set backupdir+=$TEMP//
+set dir-=.
+set directory+=$TEMP//
+"my_custom_setting
 #vim
 
 #shell
@@ -231,6 +239,8 @@ $ git config --global github.user myusername
 $ git config --global github.token mytoke
 #获取GITHUB源码
 可直接使用git命令，如git clone --recursive git@github.com:G33kLabs/Node.VaSH.git，那么默认会下载到你当前目录上(注：写在脚本上运行时会执行无效)
+#防止提交交换文件的方法
+cd到项目目录，执行echo *.swp >> .gitignore
 #SSH连接参考：
 https://help.github.com/articles/generating-ssh-keys
 http://mzhou.me/article/33001/ #这里还包含很多操作说明

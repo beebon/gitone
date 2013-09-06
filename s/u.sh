@@ -55,9 +55,22 @@ sudo vim $BASHRC
 #gitone
 #if [ -z "$1"] then echo "缺少git项目名称";exit fi
 cd ~/'Ubuntu One'/shell
-git init --bare
-git add .
+if [ -n "$1"]; then git init --bare;git add .; fi
+git add -i #交互模式
 git commit -am 'fisrt commit shell'
 git remote add origin https://github.com/beebon/gitone.git
-git push -u origin master -f
+git push -u origin master -f #force push
 #gitone
+#commitone
+cd ~/'Ubuntu One'/shell
+if [ -z "$1"]; then echo commit remark required;exit; fi
+git add -i #交互模式
+git commit -am "$1"
+git remote add origin https://github.com/beebon/gitone.git
+git push -u origin master -f #force push
+#commitone
+
+###########look for specified file to remove#########################
+#f2d
+find . -name "$1"  | xargs rm -rf
+#f2d
