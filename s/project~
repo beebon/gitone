@@ -1,0 +1,27 @@
+#sport
+nodejs '/media/beebon/9C4C1FA94C1F7D68/MyJob/sport/04 代码/Server/ExpressSite/server.js'
+#sport
+#########################################################################################
+#copy_mongo
+#将windows下的数据库复制到linux中
+#chmod 777 /var/lib/mongodb
+cp '/media/beebon/B484183A8417FE14/Program Files/mongodb-win32-i386-2.4.5/data/db/local.0' /var/lib/mongodb/
+cp '/media/beebon/B484183A8417FE14/Program Files/mongodb-win32-i386-2.4.5/data/db/local.ns' /var/lib/mongodb/
+chmod 755 /var/lib/mongodb
+#copy_mongo
+##########################################################################
+#install_node
+#安装nodejs环境，包括nodejs、npm、mongodb及相关启动项设置
+#install nodejs
+sudo apt-get install nodejs
+#install npm
+sudo apt-get install npm
+# install mongodb
+sudo apt-get install mongodb
+#注册mongo服务
+cd /usr/bin
+# --dbpath：指定mongo的数据库文件夹--logpath：指定mongo的log日志文件名--logappend：表示log的写入是采用附加的方式，默认的是覆盖之前的文件
+echo bee | sudo -S ./mongod --dbpath /var/lib/mongodb/ --logpath /var/log/mongodb/mongodb.log --logappend &
+#install_node
+###########################################################################
+
