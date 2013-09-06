@@ -3,5 +3,5 @@ cd ~/'Ubuntu One'/shell
 git init --bare
 git add .
 git commit -am 'fisrt commit shell'
-git remote add orgin https://github.com/beebon/gitone
+git remote add orgin https://github.com/beebon/gitone.git
 git push origin master
