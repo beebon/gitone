@@ -100,9 +100,11 @@ case $1 in
   CONF=/usr/jexus/siteconf/default;;
 2)
   CONF=/etc/vim/vimrc;;
+3)
+  CONF=~/.gitconfig;;
 *)
   echo 'deault=~/.bashrc'
-  echo 'parms desription:1=jexus default,2=vim';;
+  echo 'parms desription:1=jexus default,2=vim,3=git,3=git,3=git';;
 esac
 sudo vim $CONF
 #conf
