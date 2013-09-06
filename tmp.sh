@@ -4,4 +4,4 @@ git init --bare
 git add .
 git commit -am 'fisrt commit shell'
 git remote add origin https://github.com/beebon/gitone.git
-git push origin master
+git push -u origin master -f
