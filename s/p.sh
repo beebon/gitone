@@ -102,6 +102,8 @@ case $1 in
   CONF=/etc/vim/vimrc;;
 3)
   CONF=~/.gitconfig;;
+4)
+  CONF=~/'Ubuntu One'/shell/.git/config;;
 *)
   echo 'deault=~/.bashrc'
   echo 'parms desription:1=jexus default,2=vim,3=git,3=git,3=git';;
