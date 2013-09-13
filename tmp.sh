@@ -1,11 +1,9 @@
+#if [ -z "$1"] then echo "缺少git项目名称";exit fi
 cd ~/'Ubuntu One'/shell
-if [ -z "$1" ]
-then echo 'commit remark required';exit
+if [ -n "$1" ]
+then git init --bare;git add .
+else git add -i
 fi
-if [ -z "$2" ]
-then git add .
-else git add -i #交互模式
-fi
-git commit -am "$1"
+git commit -am 'fisrt commit shell'
 git remote add origin https://github.com/beebon/gitone.git
 git push -u origin master -f #force push

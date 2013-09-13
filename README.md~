@@ -7,6 +7,6 @@ Usage:
    $ cd ~/'Ubuntu One'/shell
    $ . i.sh #init .bashrc for use all .sh as a comman in the direction
    $ . ~/.bashrc #for making the .bashrc config updating enabled immediatly
-   $ u conf #test wether the command goes work,if the bashrc open with vim,it work!
+   $ u conf //test wether the command goes work,if the bashrc open with vim,it work!
    
    
