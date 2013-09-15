@@ -1,0 +1,72 @@
+#######################main shell#########################
+tt=$1
+if [ -z "$1" ]
+then tt='all'
+fi
+sed -n -e "/^#$tt/,/^#$tt/p" ~/'Ubuntu One'/shell/init.sh|sed "/^#$tt/d" >~/'Ubuntu One'/shell/tmp.sh;chmod 777 ~/'Ubuntu One'/shell/tmp.sh
+dos2unix ~/'Ubuntu One'/shell/tmp.sh >/dev/null 2>&1
+#cat ~/'Ubuntu One'/shell/tmp.sh|less
+. tmp.sh `echo $* | sed -e "s/$tt //"`
+sleep 1s;rm -f ~/'Ubuntu One'/shell/tmp.sh
+read -n1 -p "Press any key to exit..."
+exit
+#######################end main shell####################
+#all
+
+#install dos2unix
+#dos2unix
+sudo apt-get install dos2unix
+#dos2unix
+
+#install chromium flash plugin
+#flash
+sudo mkdir ~/tmp;sudo chmod 777 ~/tmp;cd ~/tmp
+wget 'http://get.adobe.com/cn/flashplayer/completion/?installer=Flash_Player_11.2_for_other_Linux_(.tar.gz)_32-bit'
+tar -zxvf install_flash_player_11_linux.i386.tar.gz
+cd install_flash_player_11_linux.i386
+sudo cp -r usr/* /usr
+sudo cp libflashplayer.so /usr/lib/firefox/plugins/
+#flash
+
+#install wine
+#wine
+sudo apt-get install wine
+winetricks riched20 riched30 ie8 vcrun6 flash11 gdiplus msls31 msxml vcrun2005 vcrun2008 winhttp
+#wine
+
+#install qq
+#qq
+
+#qq
+
+#install node
+#node
+
+#node
+
+#install node-webkit
+#webkit
+
+#webkit
+
+#install mongo
+#mongo
+
+#mongo
+
+#install vim
+#vim
+
+#vim
+
+#install git
+#git
+
+#git
+
+#install jexus
+#jexus
+
+#jexus
+
+#all

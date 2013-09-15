@@ -31,7 +31,7 @@ u chrome http://localhost/info
 #jexus
 ###########################################################
 #find
-grep -R --include="*.*" $1 "$PWD"
+grep -R --color=always --include="*.*" $1 "$PWD"
 #find
 ##########################################################
 #conf
@@ -43,9 +43,14 @@ case $1 in
   BASHRC=~/.bash_profile;;
 3)
   BASHRC=/etc/rc.local;;
+4)
+  BASHRC=/root/.bashrc;;
+5)
+  BASHRC=/boot/grub/grub.cfg;;
 *)
   echo 'deault=~/.bashrc'
-  echo 'parms desription:1=/etc/profile,2=~/.bash_profile,3=/etc/rc.local';;
+  echo 'parms desription:1=/etc/profile,2=~/.bash_profile,3=/etc/rc.local'
+  echo '4=/root/.bashrc,5=/boot/grub/grub.cfg';;
 esac
 sudo vim $BASHRC
 #conf
@@ -81,3 +86,42 @@ git push -u origin master -f #force push
 #f2d
 find . -name "$1"  | xargs rm -rf
 #f2d
+
+###########look for specified file to remove(by exclude certain name)#######
+#ef2d
+find ! -name "$1" ! -name '.'|xargs rm -rf
+#ef2d
+
+##########start app by wine#############
+#win
+DIRE=~/.wine/drive_c/Program*/Tencent/QQ/Bin/QQ.exe
+case $1 in
+1)
+  DIRE=~/.wine/drive_c/Program*/AliWangWang/AliIM.exe;;
+2)
+  DIRE=~/.wine/drive_c/Program*/Tencent/QQ/Bin/QQ.exe;;
+3)
+  DIRE=/media/beebon/WIN7/Users/Administrator/AppData/Local/MapleStudio/ChromePlus/Application/chrome.exe;;
+4)
+  DIRE=root/.bashrc;;
+5)
+  DIRE=/boot/grub/grub.cfg;;
+*)
+  echo 'deault=QQ.exe,1=AliIM.exe,2=qq.exe,3=chrome.exe';;
+esac
+[ "$2" = "" ] && WINEDEBUG=-all $DIRE || wine $DIRE
+#win
+
+###########create a desktop shortcup#############
+#lk
+time=`date +%M%S`
+filename=~/Desktop/$time.desktop
+echo '[Desktop Entry]' >> $filename
+echo Type=Application>> $filename
+echo Terminal=true>> $filename
+echo Name=MyAppShortcut>> $filename
+echo Icon=$HOME/icon.svg>> $filename
+echo Exec=sh $HOME/test.sh>> $filename
+echo 创建完毕，请到桌面右键编辑详细属性(注意勾选允许可执行) 
+echo 链接的脚本应尽可能简单，目前测试在链接的脚本继续调用其他脚本会出错，若执行一些简单的如wine /somepath/***.exe则可正常执行
+#lk

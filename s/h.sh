@@ -13,14 +13,46 @@
   弄完两个浏览器就支持flash了
 #wubi
 
+#shortcut
+桌面快捷运行shell脚本代码如下,一般修改后三项即可
+[Desktop Entry]
+Type=Application
+Terminal=true
+Name=MyAppShortcut
+Icon=/path/to/icon/icon.svg
+Exec=/path/to/file/mount-unmount.sh
+
+关于wine的桌面快捷，请执行h wine查看
+#shortcut
+
+#wine
+关于wine的用法经过实测一般原windows系统里的程序都可直接通过wine "the_app_path"来运行，也可直接在ubuntu下制作桌面快捷方式直接打开，不过通过终端打开较稳定，以下给出一个创建桌面快捷的代码：
+[Desktop Entry]
+Name=腾讯QQ
+Exec=env WINEPREFIX="/home/beebon/.wine" winedbg C:\\\\Program\\ Files\\\\Tencent\\\\QQ\\\\Bin\\\\QQ.exe 
+Type=Application
+StartupNotify=true
+Path=/home/beebon/.wine/dosdevices/c:/Program Files/Tencent/QQ/Bin/
+Icon=6CA2_NewShortcut311_0951773981FA4AB2BC21B7DCEC95892A.
+
+上述代码通过文本编辑器存为Name.desktop即可。
+注：你也可以直接在ubuntu上执行安装包，不过建议如果可以用原WINDOWS系统的程序则最好，也可以最小的占用硬盘资源。
+#wine
+
 #qq
 ＊qq安装
 参考：http://www.2cto.com/os/201207/144253.html
+需要安装wine,这里如果安装完成后程序无法运行，可以将桌面上生成的快捷方式用文本编辑器打开，编辑第二行Exec部分，将wine替换为winedbg,保存修改后直接拖放到终端，就可以跟踪到程序运行的错误在哪，方便用户解决问题所在，如安装淘宝时发现字库出了问题，需要从windows将相应的字库拷到ubuntu的wine环境中,进一步也可以通过执行wineconsole cmd中运行应用进行调试
 上述页面中，其中按其说法执行 winetricks打开时提示:Graphical UI can be started with --gui,按提示改为 winetricks --gui即可
 如果不使用GUI方式启动，可直接终端输入：winetricks riched20 riched30 ie8 vcrun6 flash11 gdiplus msls31 msxml6 vcrun2005 vcrun2008 winhttp
 或参考http://www.longene.org/forum/viewtopic.php?t=4700页面上的安装说明（其中提到的WINEQQ是已经连同WINE一同打包的QQ版本，不用另安装WINE，直接双击下载的deb即可）
 注：也可直接使用在线版QQ，即web2.qq.com
 #qq
+
+#taobao
+使用wine安装旺旺时，注意安装完成后，使用winecfg配置libary标签页中的gdiplus.dll为build then native, 否则会提示缺少该dll。
+同样的在运行其他程序若提示找不到某个dll时，可以尝试将该DLL多配置几次不同的的属性直到程序可正常运行为止
+#taobao
 
 #nodejs
 *NODEJS环境搭建：
@@ -96,14 +128,18 @@
  2.编写SHELL，内容如下：
   #!bash
  #安装mongo服务
- cd /usr/bin
+ #cd /usr/bin
  # --dbpath：指定mongo的数据库文件夹--logpath：指定mongo的log日志文件名--logappend：表示log的写入是采用附加的方式，默认的是覆盖之前的文件
  echo mypsw | sudo -S ./mongod --dbpath /var/lib/mongodb/ --logpath /var/log/mongodb/mongodb.log --logappend &
-
+#把上述脚本放在用户启动配置文件中，通过u conf 3编辑/etc/rc.local即可
   接下来就可以保存到指定目录中,如mongo_service.sh，并执行些shell即可，sh yourpath/mongo_service.sh 或 source yourpath/mongo_service.sh,
 这里建议自定义一个文件夹，专门用来存放自定义的脚本，并将该目录设置到全局PATH变量中方便调用
 
   注意：如果是系统非正常关闭，这样启动会报错，由于mongodb自动被锁上了，这是需要进入mongodb数据库文件所在的目录（/var/lib/mongodb/）,删除目录中的mongodb.lock文件,然后再进行上述操作。
+#数据迁移
+导出数据：mongodump --host localhost:27017 -d dump_dbname -uusername -ppasswd -o your_mongo_db_path --directoryperdb
+导入数据：mongorestore --directoryperdb your_dump_dbname_path
+
 #node
 
 #env
@@ -148,14 +184,14 @@ $ sudo ln -fs /lib/i386-linux-gnu/libudev.so.1.2.2 /usr/lib/libudev.so.0 其中-
 #webkit
 
 #chrome
-＊安装chromeplus-1.3.3.3_ubuntu_debian_i686.tar.gz
-同样碰到上述的情况，请执行
+＊从http://download.tech.qq.com/soft/1/2/82053/ 下载并解压chromeplus-1.3.3.3_ubuntu_debian_i686.tar.gz，移动解压包到/usr/lib，并执行该目录下的chrome,将会提示缺少某些so对象，可以通过apt-file search ***.so命令来安装so对象，或者可以通过locate ***.so查找是否已存在相应的so,最后可能会需要执行
 sudo ln -fs /usr/lib/i386-linux-gnu/libplds4.so /usr/lib/libplds4.so.0d
 sudo ln -fs /usr/lib/i386-linux-gnu/libplc4.so /usr/lib/libplc4.so.0d
 sudo ln -fs /usr/lib/i386-linux-gnu/libnspr4.so /usr/lib/libnspr4.so.0d
 sudo ln -fs /usr/lib/i386-linux-gnu/libjpeg.so.8.0.2 /usr/lib/libjpeg.so.62
 最后虽然安装并可运行，但常常崩溃，故暂无法使用
-#chorme
+如果安装libXss.so有问题时请参考：http://askubuntu.com/questions/59703/skype-error-while-loading-shared-libraries-libxss-so-1-cannot-open-shared-obj
+#chrome
 
 #vim
 *vim winmanager插件安装：
@@ -208,7 +244,7 @@ sudo umount /media/beebon/9C4C1FA94C1F7D68;sudo rmdir
 http://www.jexus.org/
 http://www.mono-project.com/Mono:Linux
 以下简单说明安装步骤
-1.首先我并没按上述方式安装mono环境，而是直接在软件中心安装了mono的IDE软件MonoDevelop（3.0.3.2）,该软件已包含了基本的开发编绎环境,安装完后找个以前做的项目编绎发现提示could not obtain a c# compliler c# compiler not found for mono/.net 3.5,网上找了个解决方案，执行sudo apt-get install mono-gmcs,将安装2.0，3.0编绎器及通用语言接口，另外执行sudo apt-get install mono-dmcs则安装4.0编绎器及接口(monodevelop默认已安装dmcs)
+1.首先我并没按上述方式安装mono环境，而是直接在软件中心安装了mono的IDE软件MonoDevelop（3.0.3.2）,该软件已包含了基本的开发编绎环境,安装完后找个以前做的项目编绎发现提示could not obtain a c# compliler c# compiler not found for mono/.net 3.5,网上找了个解决方案，执行sudo apt-get install mono-gmcs,将安装2.0，3.0编绎器及通用语言接口，另外执行sudo apt-get install mono-dmcs则安装4.0编绎器及接口(monodevelop默认已安装dmcs),所以也可以通过修改构建目标为4.0来解决此问题
 2.其次是安装.net服务器环境，这里使用的是jexus服务器，一款国产的服务器，其功能甚至超过了IIS6，具体安装方法如下
 cd ~/Downloads
 wget http://www.linuxdot.net/down/jexus-5.4.3.tar.gz #默认下到当前目录，也可指定下载目录，加－O ~/Downloads/ 
@@ -221,6 +257,8 @@ sudo ./jws start
 u chrome http://localhost/info #打开默认测试网站，若正常显示则表示安装成功
 默认的网站配置文件在/usr/jexus/siteconf/default中，一般一个网站一个配置文件
 可以直接修改默认配置，也可为自己的网站新建自己的配置，一般可直接复制默认配置进行修改，输入sudo cp siteconf/default siteconf mysite即可，修改mysite配置文件，一般修改下root的路径root、端口号port、网站域名hosts、索引页indexs、扩展名aspnet_exts(配置文件的路径放在jws.conf中，如果有需要也可以修改，不过建议使用默认路径就好)，每次新建一个站点配置请重启一下服务器，确保新的配置可以重新加载
+注：配置中建议路径中不要使用中文或空格等特殊符号，路径中不使用～表示，写为绝对路径
+#安装调试工具mono-xsp4,若是基于asp.net2.0则下载xsp2.可从软件中心中下载，或直接输入sudo apt-get install mono-xsp4-base下载安装
 #mono
 
 #suspend
@@ -234,7 +272,7 @@ sudo apt-get install git
 #设置git的user name和email：
 $ git config --global user.name "myusername"
 $ git config --global user.email "myemail"
-#设置github的参数：
+#设置github的参数(其中token可在profile-application-create new token来生成，生成后无法继续查看，需要时只能另生成，所以若不想每次重新生成则需妥善保管)：
 $ git config --global github.user myusername
 $ git config --global github.token mytoke
 #获取GITHUB源码

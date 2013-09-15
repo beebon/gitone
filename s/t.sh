@@ -50,4 +50,12 @@ fi
 echo $#
 if test $# -gt 1; then echo "有参数$*" ;else echo "无参数$*"; fi
 #hasparm
-###########################################################################################
+###########################################################################
+#remove_chrome
+sudo rm -rf /usr/lib/libXss.so.1
+sudo rm -rf /usr/lib/libplds4.so.0d
+sudo rm -rf /usr/lib/libplc4.so.0d
+sudo rm -rf usr/lib/libnspr4.so.0d
+sudo rm -rf /usr/lib/libjpeg.so.62
+sudo rm -r /usr/lib/chromeplus-1.3.3.3_ubuntu_debian_i686 
+#remove_chrome

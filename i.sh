@@ -11,6 +11,7 @@ case $1 in
   echo 'error:please give an parm in 1 or 2';;
 esac
 echo "bash=$BASHRC"
+
 #清除原有内容并重新写入,-i表示过滤后写入到文件
 sed -i '/^#custom_config_start/,/^#custom_config_end/d' $BASHRC
 rm -f ~/'Ubuntu One'/shell/*.sh~
@@ -18,14 +19,16 @@ rm -f ~/'Ubuntu One'/shell/*.sh~
 echo '#custom_config_start' >> $BASHRC
 #echo 'mysh="cd ~/'Ubuntu One'/shell' >> $BASHRC
 echo "export PATH=\$PATH:'~/Ubuntu One'/shell:/usr/lib/node-webkit-v0.7.2-linux-ia32:/usr/lib/chromeplus-1.3.3.3_ubuntu_debian_i686" >> $BASHRC
-echo "chmod 764 ~/'Ubuntu One'/shell/*.sh" >> $BASHRC 
-chmod 764 ~/'Ubuntu One'/shell/*.sh 
+echo "chmod 764 ~/'Ubuntu One'/shell/*.sh" >> $BASHRC
+chmod 764 ~/'Ubuntu One'/shell/*.sh
 #make sh alias
-echo '#custom alias' >> $BASHRC 
+echo '#custom alias' >> $BASHRC
 arr=`ls ~/'Ubuntu One'/shell/`
-echo "成功导入了如下命令："
-echo "$arr"
-for item in $arr;do echo "alias ${item%.*}='. $item'">>$BASHRC;done
+#echo "成功导入了如下命令："
+#echo "$arr"
+#[[ "${item/'.sh'/}" != "$item" ]] && echo "include .sh" || echo "not"
+for item in $arr;do [[ "${item/'.sh'/}" != "$item" ]] && echo "alias ${item%.*}='. $item'">>$BASHRC;done
+#for item in $arr;do echo "alias ${item%.*}='. $item'">>$BASHRC;done
 echo '#custom_config_end' >> $BASHRC
 #使配置生效
 sleep 1s
