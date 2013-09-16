@@ -8,9 +8,9 @@ case $1 in
 2)
   BASHRC=~/.bash_profile;;
 *)
-  echo 'error:please give an parm in 1 or 2';;
+  echo '默认写入~/.bashrc,使用参数1或2分别可写入/etc/profile与~/.bash_profile';;
 esac
-echo "bash=$BASHRC"
+#echo "bash=$BASHRC"
 
 #清除原有内容并重新写入,-i表示过滤后写入到文件
 sed -i '/^#custom_config_start/,/^#custom_config_end/d' $BASHRC
@@ -30,6 +30,7 @@ arr=`ls ~/'Ubuntu One'/shell/`
 for item in $arr;do [[ "${item/'.sh'/}" != "$item" ]] && echo "alias ${item%.*}='. $item'">>$BASHRC;done
 #for item in $arr;do echo "alias ${item%.*}='. $item'">>$BASHRC;done
 echo '#custom_config_end' >> $BASHRC
+echo alias nau='"'nautilus '$'PWD'"' >> $BASHRC
 #使配置生效
 sleep 1s
 . $BASHRC
