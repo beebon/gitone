@@ -29,8 +29,9 @@ arr=`ls ~/'Ubuntu One'/shell/`
 #[[ "${item/'.sh'/}" != "$item" ]] && echo "include .sh" || echo "not"
 for item in $arr;do [[ "${item/'.sh'/}" != "$item" ]] && echo "alias ${item%.*}='. $item'">>$BASHRC;done
 #for item in $arr;do echo "alias ${item%.*}='. $item'">>$BASHRC;done
+#echo alias nau='"'nautilus '$'PWD'"' >> $BASHRC
+echo alias nau="'"nautilus ."'" >> $BASHRC
 echo '#custom_config_end' >> $BASHRC
-echo alias nau='"'nautilus '$'PWD'"' >> $BASHRC
 #使配置生效
 sleep 1s
 . $BASHRC

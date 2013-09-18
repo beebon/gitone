@@ -94,6 +94,7 @@ sudo apt-get install nodejs
 [ "$?" = "0" ] && echo nodejs installed >> ~/tmp/log || echo nodejs installed failed >> ~/tmp/log
 sudo apt-get install npm
 [ "$?" = "0" ] && echo npm installed >> ~/tmp/log || echo npm install failed >> ~/tmp/log
+ln -s /usr/bin/nodejs /usr/bin/node #解决一些npm插件无法执行问题，如phonegap
 #node
 
 #install node-webkit
@@ -188,4 +189,33 @@ read keypress
 [ "$keypress" = "y" ] && firefox http://localhost/info
 #jexus
 
+#phonegap
+sudo npm install -gf phonegap #需要加上f这个强制安装参数
+#安装android sdk
+cd ~/Downloads
+wget http://dl.google.com/android/android-sdk_r22.2-linux.tgz
+tar -zxvf android-sdk_22.2-linux.tgz
+#上面的sdk only包似乎少了些东西，只好又下载adt bundle,该包含有eclipse等相关工具，可只使用其android sdk部分即可
+wget http://dl.google.com/android/adt/adt-bundle-linux-x86_64-20130911.zip
+unzip adt-bundle-linux-x86_64-20130911.zip
+mv -rf adt-bundle-linux-x86_64-20130911/sdk android-sdk_22.2-linux
+#export PATH=${PATH}:/home/beebon/Downloads/android-sdk-linux/tools
+#需升级nodejs,从apt-get安装的仅为0.6的版本，需0.8以上方可正常运行,下载当前最新版并编绎安装
+wget http://nodejs.org/dist/v0.10.18/node-v0.10.18.tar.gz -O nodejs.tar.gz
+tar -xvzf nodejs.tar.gz
+make
+sudo make install
+#安装ant和jdk7
+sudo apt-get install ant
+sudo apt-get install openjdk-7-jdk
+#手动配置环境变量（或者确保上述下载包解压路径与该配置一致即可）
+echo export ANDROID_HOME=/home/beebon/Downloads/adt-bundle-linux-x86_64-20130911/sdk >> ~/.bashrc
+echo export PATH=$PATH:$ANDROID_HOME/tools >> ~/.bashrc
+echo export PATH=$PATH:$ANDROID_HOME/platform-tools >> ~/.bashrc
+echo export PATH=$PATH:$ANDROID_HOME/build-tools >> ~/.bashrc
+#echo export JAVA_HOME=/usr/lib/jvm/java-7-openjdk-i386/jre >> ~/.bashrc
+#echo export PATH=$PATH:$JAVA_HOME/bin >> ~/.bashrc
+ehco '将打开android sdk manager,请到菜单，选项中配置代理210.101.131.231:8080,并勾选强制使用http连接选项，可参考http://my.oschina.net/sxq0714/blog/52538 建议使用japan or korea的代理'
+android
+#phonegap
 #all

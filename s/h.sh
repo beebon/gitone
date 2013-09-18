@@ -282,4 +282,51 @@ cd到项目目录，执行echo *.swp >> .gitignore
 #SSH连接参考：
 https://help.github.com/articles/generating-ssh-keys
 http://mzhou.me/article/33001/ #这里还包含很多操作说明
+#mangit
+#常用说明
+- 1.建立本地仓库源码仓库源
+  - mkdir the_path_your_resp
+  - cd the_path_your_resp;git init --bare #建议加上bare参数，否则复制库提交时有可能出现refusing to update checked out branch，当然你也可以事后执行git config core.bare true来修改此属性值
+  以上就建立了一个空的本地仓库，如果需要加入一些初始代码做为最初版本的话，可以直接加入，然后记得在该目录下执行以下代码
+  - git add . # or git add *
+  - git commit -m 'first init the resp' #这两句可合并为一句git commit -a -m 'first init the resp'
+  注：这里不需要执行git push origin master,这里需要补充另一个知识，说明如下
+  git的三个目录：工作目录、缓存目录、HEAD目录，在仓库源中可以这么理解：仓库源中更新的代码先是在工作目录中得到更新，此时这是我们实际存在的代码，当使用git add命令后，其实只是下达了一个指令说我要加入这么一个更新，但缓存区里并没有真正得到更新，这时你还是可以做一些撤消之类的动作，当执行了git commit后，则直接更新到缓存区了，而由于我们这本来就是源仓库，所以不存在需要配置remote.origin.url，所以第三个目录head目录也就相当于与缓存目录内容一致
+  最后我们还需要做一件事，就是把目录切换到分支中，这里切换到开发分支,我们日常开发以此分支为主，直到重大版本或里程碑时方并入主分支
+  - git checkout -b dev master #指新建并切换到dev分支，该分支属于master主干下(相当于执行了git branch dev;git checkout dev)
+  注：删除分支使用git branch -d branch_name,不加任何参数则可直接查看所有分支信息及当前分支
+      若要查看各个分支最后一个提交对象的信息，运行git branch -v
+      使用--merged 或--nomerged查看合并或未合并的分支情况
+  2.复制源仓库
+  - cd what-ever-path-you-like
+  - git clone the_path_your_resp
+  此时你将得到一个最新的与源仓库一致的版本
+  接下来切换到开发分支
+  - git checkout -b dev
+  如果开发分支有代码更新，那么你可能不能简单的输入git pull(git pull即git fetch;git merge),而是输入如下
+  - git pull origin dev #这样才能正常获取源仓库最新代码并与自己工作目录的代码合并
+  如果发现自己工作目录的代码不小心改错了，又想还源到源仓库的最新版本，可以这样做
+  - git fetch #此句要执行才可正常获取更新，试过不执行此句直接执行下句无法正常更新
+  - git checkout the_file_you_want_to_restore # 这是先将源仓库的最新代码存入缓存目录后更新指定文件到工作目录中，如果需要更新的是某个分支则需要指明，如下：
+  -get checkout origin/dev the_file_you_want_to_restore
+  #也可以指定还原指定版本，一般做法如下
+  - git log the_file_you_want_to_restore #从日志中查找出需要回退的版本号后
+  - git reset the_version_number the_file_you_want_to_restore #将文件回退到此仓库的指定版本
+  - git commit -m 'restore to the version ***' #提交更新
+  - git checkout the_file_you_want_to_restore #更新缓存目录的指定版本到工作目录
+  - git push origin dev
+  注：这里若不指明还原文件，则还原整个版本，故需谨慎还原。如果在此复制库中还原整个版本后同时还需要还原源仓库与其一致时，可执行git push -f,即强制将此库代码推至源仓库
+#mangit
 #git
+
+#phonegap
+参考http://phonegap.com/install/
+安装：
+sudo npm install -g phonegap #按此方法安装出错，需要加上f参数强制安装
+
+使用方法：
+$ phonegap create my-app
+$ cd my-app
+$ phonegap local run android #官网是没加local,则以remote方式运行，若没安装android sdk则会报错，可参考http://stackoverflow.com/questions/17589305/cordova-node-js-phonegap
+要使上述命令可顺利运行，还需安装android sdk,
+#phonepap
