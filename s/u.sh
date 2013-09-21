@@ -3,6 +3,13 @@
 kill -9 `ps ax|grep $1|grep -v grep|awk '{print $1}'`
 #kill
 ############################################################
+#kbig
+#usage:u kbig 30 #kill which cpu occupied more than 30,and default is 20
+[ "$1" = "kbig" ] && num=20 || num=$1
+echo $num
+top -b1 -n1 | sed '1,5d' | awk '{if($9>='$num')print}' | awk '{print $1}' | xargs kill -9
+#kbig
+##########################################
 #pak
 #pack or unpack the chrome pak file by nodejs
 #echo "调用路径：${0%/*}" #测试回显被调用脚本所在路径

@@ -114,10 +114,12 @@ sudo vim $CONF
 #start
 case $1 in
 1)
+  cd=$PWD
 	cd /usr/jexus
 	#sudo ./jws regsvr
 	sudo ./jws restart;;
-	#u chrome http://localhost/info
+	cd $cd
+  #u chrome http://localhost/info
 *)
   echo 'parms desription:1=jexus';;
 esac
