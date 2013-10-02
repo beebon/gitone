@@ -2,6 +2,11 @@
 #杀死指定名称的进程，如kill firefox
 kill -9 `ps ax|grep $1|grep -v grep|awk '{print $1}'`
 #kill
+#########################
+#pkill
+#按端口号杀死指定进程,其中awk '{print $2}'表示获取结果表的第二个字段值
+kill -9 `lsof -i:$1|grep -v grep|awk '{print $2}'`
+#pkill
 ############################################################
 #kbig
 #usage:u kbig 30 #kill which cpu occupied more than 30,and default is 20
@@ -132,3 +137,7 @@ echo Exec=sh $HOME/test.sh>> $filename
 echo 创建完毕，请到桌面右键编辑详细属性(注意勾选允许可执行) 
 echo 链接的脚本应尽可能简单，目前测试在链接的脚本继续调用其他脚本会出错，若执行一些简单的如wine /somepath/***.exe则可正常执行
 #lk
+###########start aria2 service##########
+#aria
+aria2c --enable-rpc --rpc-listen-all
+#aria

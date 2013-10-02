@@ -218,4 +218,11 @@ echo export PATH=$PATH:$ANDROID_HOME/build-tools >> ~/.bashrc
 ehco '将打开android sdk manager,请到菜单，选项中配置代理210.101.131.231:8080,并勾选强制使用http连接选项，可参考http://my.oschina.net/sxq0714/blog/52538 建议使用japan or korea的代理'
 android
 #phonegap
+######################
+#go
+wget http://go.googlecode.com/files/go1.1.2.linux-386.tar.gz
+tar -C /usr/local -xzf go1.1.linux-386.tar.gz
+echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+[ "$?" = "0" ] && echo go installed >> ~/tmp/log || echo go install failed >> ~/tmp/log
+#go
 #all

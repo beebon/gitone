@@ -114,15 +114,19 @@ sudo vim $CONF
 #start
 case $1 in
 1)
-  cd=$PWD
+  dr=$PWD
 	cd /usr/jexus
 	#sudo ./jws regsvr
-	sudo ./jws restart;;
-	cd $cd
+	sudo ./jws restart
+	cd $dr;;
   #u chrome http://localhost/info
+2)
+  dr=$PWD
+  cd /usr/local/redis*
+  redis-server redis.conf
+  cd $dr;;
 *)
-  echo 'parms desription:1=jexus';;
+  echo 'parms desription:1=jexus,2=redis';;
 esac
 #start
-
 

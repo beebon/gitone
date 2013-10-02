@@ -59,3 +59,12 @@ sudo rm -rf usr/lib/libnspr4.so.0d
 sudo rm -rf /usr/lib/libjpeg.so.62
 sudo rm -r /usr/lib/chromeplus-1.3.3.3_ubuntu_debian_i686 
 #remove_chrome
+###################################
+#curl
+curl -i -d 'Name=game111&Type=j&GroupType=women&Note=g1&AwardLimitNum=4&LimitNum=4&OrgId=beebon&_id=1379815062867&__v=0&IsActived=false' http://localhost/h/app/GameItem?m=Update | less
+#curl
+##################################
+#scurl
+curl -i -d 'Name=game11&Type=j&GroupType=women&Note=g1&AwardLimitNum=4&LimitNum=4&OrgId=beebon&_id=1379815062867&__v=0&IsActived=false' http://localhost:8090/dao/game_item/update.json?token=ba19e018d88aeb64e093105b9349600a9f1aec509dcd3dec3d2c53e8530c9c3cfa0cc2f50ec0a6c599e76b67b4f55339bf413b8eed225c1f7e31814daf7fad7d | less
+#scurl
+
